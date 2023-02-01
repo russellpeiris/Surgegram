@@ -3,7 +3,6 @@ import styled from 'styled-components'
 
 const Container = styled.div`
     display: flex;
-    /* margin: 0; */
     height: 100vh;
 `
 const LeftContainer = styled.div`
@@ -11,8 +10,10 @@ const LeftContainer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color:#061826;
-
+    background-color:#0F072C;
+    background-image: url(https://images.pexels.com/photos/4353618/pexels-photo-4353618.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2);
+    background-position: center;
+    
 `
 const LoginContainer = styled.div`
     background-color: white;
@@ -22,6 +23,7 @@ const LoginContainer = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    border-radius: 10px;
 `
 const LoginTitle = styled.div`
     font-size: 20px;
@@ -46,11 +48,11 @@ const PrimButton = styled.button`
     height: 38px;
     cursor: pointer;
     border: none;
-    background-color: #061826;
+    background-color: #0F072C;
     color: white;
 
     &:hover{
-        background-color: #0e273a;
+        background-color: #0f072cd7;
         font-weight: 500;
     }
 
