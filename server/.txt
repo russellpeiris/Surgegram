@@ -1,0 +1,10 @@
+express
+body-parser
+bcrypt
+cors
+dotenv
+gridfs-stream (file upload)
+multer  (request safety)
+morgan (login)
+jsonwebtoken
+mongoose 
