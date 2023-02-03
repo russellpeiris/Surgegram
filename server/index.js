@@ -63,7 +63,7 @@ mongoose.connect(process.env.MONGO_URL,{
     useNewUrlParser: true,
     useUnifiedTopology: true
 }).then(()=>{
-    app.listen(5000, ()=> console.log(`Server running on PORT ${PORT}`));
+    app.listen(PORT, ()=> console.log(`Server running on PORT ${PORT}`));
 
     //inserting dummy data only once
     // User.insertMany(users);
