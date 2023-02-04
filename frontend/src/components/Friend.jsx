@@ -27,7 +27,7 @@ const Box = styled.div`
 const IconContainer = styled.div `
     
 `
-const Friend = (friendId, name, subtitle, userPicturePath) => {
+const Friend = ({friendId, name, subtitle, userPicturePath}) => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -47,9 +47,9 @@ const Friend = (friendId, name, subtitle, userPicturePath) => {
         dispatch(setFriends({friends: data}));
     };
 
-
   return (
-    <Container>
+
+    <Container key={friendId}>
         <ImageContainer>
         <UserImage image={userPicturePath} size = "55px"/>
             <Box 
@@ -58,7 +58,7 @@ const Friend = (friendId, name, subtitle, userPicturePath) => {
                     navigate(0);
                 }}
             >
-                {/* <p>{name}</p> */}
+                {name}
                 <p>{subtitle}</p>
                 {/* Friend Name <br/>
                 Friend Desc */}

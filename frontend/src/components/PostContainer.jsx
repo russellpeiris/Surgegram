@@ -78,6 +78,7 @@ const PostContainer = ({
     const updatedPost = await response.json();
     dispatch(setPost({ post: updatedPost }));
   };
+  console.log(name);
 
   return (
     <Container>
