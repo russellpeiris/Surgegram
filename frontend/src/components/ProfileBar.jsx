@@ -20,6 +20,7 @@ const Profile = styled.div`
     gap: 10px;
     flex-direction: column;
     align-items: center;
+    
 
 `
 const ProfilePic = styled.img`
@@ -27,12 +28,13 @@ const ProfilePic = styled.img`
     width: 150px;
     object-fit: cover;
     border-radius: 50%;
+    
 
 `
 const ImageContainer = styled.div`
     height: 150px;
     width: 150px;
-    /* background-color: antiquewhite; */
+    background-color: #f5f5f5;
     border-radius: 50%;
     margin-top: 70px;
 

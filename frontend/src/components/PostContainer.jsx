@@ -41,6 +41,7 @@ const ActionBar = styled.div`
 const IconContainer = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
 `
 const Count = styled.div`
   	font-size: 12px;
@@ -78,7 +79,6 @@ const PostContainer = ({
     const updatedPost = await response.json();
     dispatch(setPost({ post: updatedPost }));
   };
-  console.log(name);
 
   return (
     <Container>
@@ -106,9 +106,11 @@ const PostContainer = ({
         </IconContainer>
         <IconContainer>
           <Comment/>
+          <Count>0</Count>
         </IconContainer>
         <IconContainer>
           <Share/>
+          <Count>0</Count>
         </IconContainer>
 
       </ActionBar>

@@ -1,15 +1,20 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useState } from 'react';
-import {Formik} from 'formik';
-import * as yup from 'yup';
+import {Formik, useFormik} from 'formik';
+// import * as yup from 'yup';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setLogin } from '../state';
 import Dropzone from 'react-dropzone';
 import {Edit, ImageSearch} from '@mui/icons-material';
+import ReCAPTCHA from "react-google-recaptcha";
+import { loginSchema, regSchema } from '../schema';
+import { TextField } from '@mui/material';
 
 /////////STYLING
+
+
 const Form = styled.form``
 
 const Container = styled.div`
@@ -41,7 +46,7 @@ const Box = styled.div`
 const CommonFields = styled.div`
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 5px;
+    gap: 10px;
     padding-top: 6px;
 `
 const Button = styled.button`
@@ -60,31 +65,22 @@ const PageType = styled.div`
         text-decoration: underline;
     }
 `
-const Input = styled.input`
-    height: 38px;
-    width: 300px;
-    outline: none;
-    border: none;
-    background-color: #f5f5f5;
-    padding-left: 10px;
+// const Input = styled.input`
+//     height: 38px;
+//     width: 300px;
+//     outline: none;
+//     border: none;
+//     background-color: #f5f5f5;
+//     padding-left: 10px;
     
+// `
+
+const CaptchaContainer = styled.div`
+
 `
-/////////VALIDATIONS
-const registerSchema = yup.object().shape({
-    firstName: yup.string().required("First name is required!"),
-    lastName: yup.string().required("Last name is required!"),
-    email: yup.string().email("Please enter a valid email").required("Email is Required!"),
-    password: yup.string().required("Password is required!"),
-    location: yup.string().required("Location is required!"),
-    occupation: yup.string().required("Occupation is required!"),
-    picture: yup.string().required("A Profile Photo is required!"),
-});
+const Validations = styled.div`
 
-const loginSchema = yup.object().shape({
-    email: yup.string().email("Please enter a valid email").required("Email is Required!"),
-    password: yup.string().required("Please enter your password"),
-})
-
+`
 const initialRegisterValues = {
     firstName: "",
     lastName: "",
@@ -101,6 +97,12 @@ const initialLoginValues = {
 
 const LoginForm = () => {
 
+    // const reCAPTCHA_KEY = process.env.CAPTCHA_KEY;
+    const [isCaptcha, setIsCaptcha] = useState(true);
+    const CaptchaChange = ()=>{
+    setIsCaptcha(false);
+}
+    
     const [pageType, setPageType] = useState('login');
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -156,129 +158,208 @@ const LoginForm = () => {
         if(isLogin) await login(values, onSubmitProps);
         if(isRegister) await register(values, onSubmitProps);
     };
+
+
+    const {
+        values,
+        errors,
+        touched,
+        handleBlur,
+        helperText,
+        handleChange,
+        handleSubmit,
+        setFieldValue,
+        resetForm,
+    } = useFormik({
+        initialValues: isLogin ? initialLoginValues: initialRegisterValues,
+        validationSchema: isLogin ? loginSchema : regSchema,
+        onSubmit: handleFormSubmit,
+    })
+
+    console.log(errors);
+
+
   return (
     <Container>
-
-        <Formik
-            onSubmit={handleFormSubmit}
-            initialValues={isLogin ? initialLoginValues: initialRegisterValues}
-            validationSchema = {isLogin ? loginSchema : registerSchema}
-        >
-            {({
-                values,
-                errors,
-                touched,
-                handleBlur,
-                handleChange,
-                handleSubmit,
-                setFieldValue,
-                resetForm,
-
-            })=>(
-                <Form onSubmit={handleSubmit}>
-                    {isRegister && (
-                        <>
-                        <RegisterContainer>
-                            <Input
-                                onBlur={handleBlur}
-                                onChange={handleChange}
-                                value={values.firstName}
-                                name="firstName"
-                                error={Boolean(touched.firstName) && Boolean(errors.firstName)
-}
-                                helperText={touched.firstName && errors.firstName}
-                                placeholder='First Name'
-                            />
-                            <Input
-                                onBlur={handleBlur}
-                                onChange={handleChange}
-                                value={values.lastName}
-                                name="lastName"
-                                error={Boolean(touched.lastName) && Boolean(errors.lastName)}
-                                helperText={touched.lastName && errors.lastName}
-                                placeholder='Last Name'
-                            />
-                            <Input
-                                onBlur={handleBlur}
-                                onChange={handleChange}
-                                value={values.location}
-                                name="location"
-                                error={Boolean(touched.location) && Boolean(errors.location)}
-                                helperText={touched.location && errors.location}
-                                placeholder='Location'
-                            />
-                            <Input
-                                onBlur={handleBlur}
-                                onChange={handleChange}
-                                value={values.occupation}
-                                name="occupation"
-                                error={Boolean(touched.occupation) && Boolean(errors.occupation)}
-                                helperText={touched.occupation && errors.occupation}
-                                placeholder='Occupation'
-                            />
-
-                                <Dropzone
-                                    acceptedFiles=".jpg,.jpeg,.png"
-                                    multiple={false}
-                                    onDrop={(acceptedFiles) =>
-                                    setFieldValue("picture", acceptedFiles[0])
-                                    }
-                                >
-                                    {({ getRootProps, getInputProps }) => (
-                                    <Box {...getRootProps()}>
-
-                                        <input {...getInputProps()} />
-
-                                        {!values.picture ? ( <p><ImageSearch/></p> 
-                                        ) : (
-                                            <Edit/>
-                                        )}
-                                    </Box>
-                                    )}
-                                </Dropzone>
-
-                        </RegisterContainer>
-                        </>
-                    )}
-                <CommonFields>
-                    <Input 
+        <Form onSubmit={handleSubmit}>
+            {isRegister && (
+                <>
+                <RegisterContainer>
+                    <TextField
                         onBlur={handleBlur}
                         onChange={handleChange}
-                        value={values.email}
-                        name="email"
-                        error={Boolean(touched.email) && Boolean(errors.email)}
-                        helperText={touched.email && errors.email}
-                        placeholder='Email'
-                    />
-
-                    <Input 
-                        type="password"
-                        onBlur={handleBlur}
-                        onChange={handleChange}
-                        value={values.password}
-                        name="password"
-                        error={Boolean(touched.password) && Boolean(errors.password)}
-                        helperText={touched.password && errors.password}
-                        placeholder='Password'
-                    />
-
-                    <Button type='submit'>{isLogin ? "LOGIN" : "REGISTER"}</Button>
-                    <PageType 
-                        onClick={() => {
-                            setPageType(isLogin ? "register" : "login");
-                            resetForm();
-                            }}
-                        >
-                            {isLogin
-                                ? "Don't have an account? Sign Up here."
-                                : "Already have an account? Login here."
+                        value={values.firstName}
+                        name="firstName"
+                        error={Boolean(touched.firstName) && Boolean(errors.firstName)}
+                        helperText={touched.firstName && errors.firstName}
+                        placeholder='First Name'
+                        style={
+                            { 
+                                justifyContent: "center",
                             }
-                    </PageType>
-                </CommonFields>
-                </Form>
-            )}
-            
-        </Formik>
+                        }
+                        InputProps={{
+                            style: {
+                                backgroundColor: "#f5f5f5",
+                                height: '38px',
+                                borderRadius : '0',
+                            }
+                        }}
+                    />
+                        <TextField
+                            onBlur={handleBlur}
+                            onChange={handleChange}
+                            value={values.lastName}
+                            name="lastName"
+                            error={Boolean(touched.lastName) && Boolean(errors.lastName)}
+                            helperText={touched.lastName && errors.lastName}
+                            placeholder='Last Name'
+                            style={
+                                { 
+                                    justifyContent: "center",
+                                }
+                            }
+                            InputProps={{
+                                style: {
+                                    backgroundColor: "#f5f5f5",
+                                    height: '38px',
+                                    borderRadius : '0',
+                                }
+                            }}
+                        />
+                        <TextField
+                            onBlur={handleBlur}
+                            onChange={handleChange}
+                            value={values.location}
+                            name="location"
+                            error={Boolean(touched.location) && Boolean(errors.location)}
+                            helperText={touched.location && errors.location}
+                            placeholder='Location'
+                            style={
+                                { 
+                                    justifyContent: "center",
+                                }
+                            }
+                            InputProps={{
+                                style: {
+                                    backgroundColor: "#f5f5f5",
+                                    height: '38px',
+                                    borderRadius : '0',
+                                }
+                            }}
+                        />
+                        <TextField
+                            onBlur={handleBlur}
+                            onChange={handleChange}
+                            value={values.occupation}
+                            name="occupation"
+                            error={Boolean(touched.occupation) && Boolean(errors.occupation)}
+                            helperText={touched.occupation && errors.occupation}
+                            placeholder='Occupation'
+                            style={
+                                { 
+                                    justifyContent: "center",
+                                }
+                            }
+                            InputProps={{
+                                style: {
+                                    backgroundColor: "#f5f5f5",
+                                    height: '38px',
+                                    borderRadius : '0',
+                                }
+                            }}
+                        />
+
+                            <Dropzone
+                                acceptedFiles=".jpg,.jpeg,.png"
+                                multiple={false}
+                                onDrop={(acceptedFiles) =>
+                                setFieldValue("picture", acceptedFiles[0])
+                                }
+                            >
+                                {({ getRootProps, getInputProps }) => (
+                                <Box {...getRootProps()}>
+
+                                    <input {...getInputProps()} />
+
+                                    {!values.picture ? ( <p><ImageSearch/></p> 
+                                    ) : (
+                                        <Edit/>
+                                    )}
+                                </Box>
+                                )}
+                            </Dropzone>
+
+                    </RegisterContainer>
+                    </>
+                )}
+            <CommonFields>
+                <TextField 
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.email}
+                    name="email"
+                    error={Boolean(touched.email) && Boolean(errors.email)}
+                    helperText={touched.email && errors.email}
+                    placeholder='Email'
+                    style={
+                        { 
+                            justifyContent: "center",
+                        }
+                    }
+                    InputProps={{
+                        style: {
+                            backgroundColor: "#f5f5f5",
+                            height: '38px',
+                            borderRadius : '0',
+                        }
+                    }}
+
+                />
+
+                <TextField 
+                    type="password"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.password}
+                    name="password"
+                    error={Boolean(touched.password) && Boolean(errors.password)}
+                    helperText={touched.password && errors.password}
+                    placeholder='Password'
+                    style={
+                        { 
+                            justifyContent: "center",
+                        }
+                    }
+                    InputProps={{
+                        style: {
+                            backgroundColor: "#f5f5f5",
+                            height: '38px',
+                            borderRadius : '0',
+                        }
+                    }}
+                />
+
+                <Button
+                disabled={isCaptcha}
+                type='submit'>{isLogin ? "LOGIN" : "REGISTER"}</Button>
+                <PageType 
+                    onClick={() => {
+                        setPageType(isLogin ? "register" : "login");
+                        resetForm();
+                        }}
+                    >
+                        {isLogin
+                            ? "Don't have an account? Sign Up here."
+                            : "Already have an account? Login here."
+                        }
+                </PageType>
+            </CommonFields>
+            <CaptchaContainer>
+                <ReCAPTCHA sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"  onChange={CaptchaChange}/>
+
+            </CaptchaContainer>
+        </Form>
     </Container>
   )
 }

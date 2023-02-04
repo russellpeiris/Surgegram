@@ -198,7 +198,6 @@ const PostUpload = ({picturePath}) => {
         <Button
           disabled={!image}
           onClick={handlePost}
-          
         >
           Post
         </Button>

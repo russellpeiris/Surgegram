@@ -28,7 +28,8 @@ const Box = styled.div`
     padding: 5px;
 `
 const IconContainer = styled.div `
-    
+    cursor: pointer;
+    margin-right: 5px;
 `
 const Friend = ({friendId, name, subtitle, userPicturePath}) => {
 
@@ -68,8 +69,7 @@ const Friend = ({friendId, name, subtitle, userPicturePath}) => {
 
             </Box>
         </ImageContainer>
-        <IconContainer>
-        <PersonAddOutlined onClick={()=> patchFriend()} />
+        <IconContainer onClick={()=> patchFriend()} >
         {/* <PersonAddOutlined /> */}
         {
             isFriend ? (

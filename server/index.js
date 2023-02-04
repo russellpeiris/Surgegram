@@ -15,9 +15,7 @@ import authRoutes from './routes/auth-routes.js';
 import userRoutes from './routes/users-routes.js';
 import postRoutes from './routes/post-routes.js';
 import { verifyToken } from "./middleware/auth.js";
-import User from './models/User.js';
-import Post from './models/Post.js';
-import {users, posts} from './data/index.js';
+
 
 //Supress warning
 mongoose.set('strictQuery', true);
@@ -56,6 +54,8 @@ app.post("/posts",verifyToken,  upload.single("picture"), createPost);
 app.use('/auth', authRoutes);
 app.use('/users', userRoutes);
 app.use('/posts', postRoutes);
+
+
 
 //MONGODB
 const PORT = process.env.PORT || 3001;
