@@ -22,6 +22,13 @@ const Profile = styled.div`
     align-items: center;
 
 `
+const ProfilePic = styled.img`
+    height: 150px;
+    width: 150px;
+    object-fit: cover;
+    border-radius: 50%;
+
+`
 const ImageContainer = styled.div`
     height: 150px;
     width: 150px;
@@ -33,12 +40,8 @@ const ImageContainer = styled.div`
 const Name = styled.div`
     font-size: 24px;
 `
-const UName = styled.div`
-    font-weight: 300;
-`
 
 const ProfileBar = ({userId, picturePath}) => {
-
     const [user, setUser] = useState(null);
     const navigate = useNavigate();
     const token = useSelector((state) => state.token);
@@ -71,10 +74,15 @@ const ProfileBar = ({userId, picturePath}) => {
     } = user;
 
   return (
+
     <Container>
         <Profile>
             <ImageContainer >
-                <UserImage image={picturePath}/>
+                {/* <UserImage image={picturePath}/> */}
+                <ProfilePic
+                    alt="user"
+                    src={`http://localhost:5000/assets/${picturePath}`}
+                />
             </ImageContainer>
             <Name onClick={()=> navigate(`/profile/${userId}`)}>
                 {firstName} {lastName}

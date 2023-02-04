@@ -18,7 +18,7 @@ const Home = () => {
   return (
     <Container>
         <NavBar/>
-        <PostsSection/>
+        <PostsSection picturePath={picturePath} userId={_id}/>
         <ProfileBar userId={_id} picturePath={picturePath}/>
     </Container>
   )

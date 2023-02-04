@@ -38,7 +38,7 @@ const MenuItem = styled.div`
     cursor: pointer;
     border-radius: 30px;
     &:hover{
-        background-color: #FAFAFA;
+        background-color: #f5f5f5;
     }
 `
 const Icon = styled.div`
@@ -57,7 +57,6 @@ const Logout = styled.div`
 `
 const NavBar = () => {
 
-    // const [MobileView, setMobileView] = useState(false);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const user = useSelector((state)=> state.user);
@@ -68,8 +67,6 @@ const NavBar = () => {
     // const background = theme.palette.background.default;
     // const alt = theme.palette.background.alt;
     // const primaryLight = theme.palette.primary.light;
-
-    // const fullName = `${user.firstName} ${user.lastName}`;
 
   return (
 
