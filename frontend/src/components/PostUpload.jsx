@@ -85,7 +85,7 @@ const Button = styled.button`
   &:hover{
     background-color: #212121;
     color: white;
-    transition: all ease 0.3s;
+    /* transition: all ease 0.3s; */
   }
 `
 const ImageName = styled.div`

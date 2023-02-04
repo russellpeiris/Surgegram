@@ -18,11 +18,14 @@ const ImageContainer = styled.div`
     display: flex;
     align-items: center;
     gap: 5px;
+    padding: 5px;
+    cursor: pointer;
 `
 const Box = styled.div`
     display: flex;
     flex-direction: column;
     font-size: 13px;
+    padding: 5px;
 `
 const IconContainer = styled.div `
     
@@ -58,8 +61,8 @@ const Friend = ({friendId, name, subtitle, userPicturePath}) => {
                     navigate(0);
                 }}
             >
-                {name}
-                <p>{subtitle}</p>
+                {name}<br/>
+                {subtitle}
                 {/* Friend Name <br/>
                 Friend Desc */}
 
@@ -67,7 +70,7 @@ const Friend = ({friendId, name, subtitle, userPicturePath}) => {
         </ImageContainer>
         <IconContainer>
         <PersonAddOutlined onClick={()=> patchFriend()} />
-        <PersonAddOutlined />
+        {/* <PersonAddOutlined /> */}
         {
             isFriend ? (
                 <PersonRemoveOutlined />

@@ -28,7 +28,7 @@ const ImageContainer = styled.div`
 `
 const Image = styled.img`
   width: 400px;
-  height: 400px;
+  /* height: 400px; */
   background-color: #f5f5f5;
 `
 const ActionBar = styled.div`
