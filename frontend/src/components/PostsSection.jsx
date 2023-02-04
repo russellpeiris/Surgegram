@@ -1,4 +1,4 @@
-import React, { useState }  from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import PostUpload from './PostUpload'
 import { setPosts } from '../state'

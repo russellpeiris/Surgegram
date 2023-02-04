@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import {ManageAccountsOutlined, EditOutlined, LocationOnOutlined, WorkOutlineOutlined} from '@mui/icons-material';
-import UserImage from './UserImage';
 import { useSelector } from 'react-redux';
-import { useEffect, useS } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { BarChart, People, Place, Visibility, Work } from '@mui/icons-material';
 
 const Container = styled.div`
     /* Container: 0%;
@@ -20,8 +19,8 @@ const Profile = styled.div`
     gap: 10px;
     flex-direction: column;
     align-items: center;
-    
-
+    border-bottom: 1px solid #e0e0e0;
+    padding: 10px;
 `
 const ProfilePic = styled.img`
     height: 150px;
@@ -41,6 +40,35 @@ const ImageContainer = styled.div`
 `
 const Name = styled.div`
     font-size: 24px;
+`
+const Bio = styled.div`
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+`
+const Details = styled.div`
+    width: 200px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 10px;
+    font-size: 14px;
+    justify-content: space-evenly;
+    
+`
+const Detail = styled.div`
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: space-between;
+
+`
+
+const DetailValue = styled.div`
+
+`
+const DetailIcon = styled.div`
+
 `
 
 const ProfileBar = ({userId, picturePath}) => {
@@ -71,6 +99,7 @@ const ProfileBar = ({userId, picturePath}) => {
         lastName,
         location,
         viewedProfile,
+        occupation,
         impressions,
         friends,
     } = user;
@@ -89,7 +118,35 @@ const ProfileBar = ({userId, picturePath}) => {
             <Name onClick={()=> navigate(`/profile/${userId}`)}>
                 {firstName} {lastName}
             </Name>
+            
         </Profile>
+        {/* <FriendList userId={userId}/> */}
+        <Bio>
+        <Details>
+            <Detail>
+                <DetailIcon><Work/></DetailIcon>
+                {/* <DetailTitle>Lives in</DetailTitle> */}
+                <DetailValue>{occupation}</DetailValue>
+            </Detail>
+            <Detail>
+                <DetailIcon><Place/></DetailIcon>
+                <DetailValue>{location}</DetailValue>
+            </Detail>
+            <Detail>
+                <DetailIcon><Visibility/></DetailIcon>
+                <DetailValue>{viewedProfile} Profile Views</DetailValue>
+            </Detail>
+            <Detail>
+                <DetailIcon><BarChart/></DetailIcon>
+                <DetailValue>{impressions} Impressions</DetailValue>
+            </Detail>
+            <Detail>
+                <DetailIcon><People/></DetailIcon>
+                <DetailValue>{friends.length} Friends</DetailValue>
+
+            </Detail>
+        </Details>
+        </Bio>
     </Container>
   )
 }

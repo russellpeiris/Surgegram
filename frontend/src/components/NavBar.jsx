@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
-import styled, { useTheme } from 'styled-components'
+import React from 'react'
+import styled from 'styled-components'
 import {PowerSettingsNew, Home, Search, Person, Chat} from '@mui/icons-material';
 import { useDispatch, useSelector } from 'react-redux';
 import { setLogout } from '../state';
 import { useNavigate } from 'react-router-dom';
-import { useMediaQuery } from '@mui/material';
+
 
 const Container = styled.div`
     /* background-color: aliceblue; */
@@ -76,7 +76,7 @@ const NavBar = () => {
         <MenuItem>
             <Icon><Search/></Icon>Search
         </MenuItem>
-        <MenuItem>
+        <MenuItem onClick={()=> navigate("/home")}>
             <Icon><Home/></Icon>Home
         </MenuItem>
         <MenuItem>

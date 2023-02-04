@@ -39,6 +39,7 @@ const Friend = ({friendId, name, subtitle, userPicturePath}) => {
     const {_id} = useSelector((state)=> state.user);
     const friends = useSelector((state)=> state.user.friends);
 
+    // Object.values(friends)
     const isFriend = friends.find((friend)=>friend._id === friendId);
     const patchFriend = async ()=> {
         const response = await fetch(`http://localhost:5000/users/${_id}/${friendId}`,{

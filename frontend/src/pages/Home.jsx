@@ -15,6 +15,8 @@ const Container = styled.div`
 const Home = () => {
 
   const {_id, picturePath} = useSelector((state)=> state.user);
+
+  
   return (
     <Container>
         <NavBar/>

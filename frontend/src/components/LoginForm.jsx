@@ -78,9 +78,6 @@ const PageType = styled.div`
 const CaptchaContainer = styled.div`
 
 `
-const Validations = styled.div`
-
-`
 const initialRegisterValues = {
     firstName: "",
     lastName: "",
@@ -133,6 +130,7 @@ const LoginForm = () => {
     };
 
     const login = async (values, onSubmitProps)=>{
+    
         const loggedInResponse = await fetch(
             "http://localhost:5000/auth/login",
             {

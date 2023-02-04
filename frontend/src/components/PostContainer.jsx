@@ -42,9 +42,13 @@ const IconContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  cursor: pointer;
 `
 const Count = styled.div`
   	font-size: 12px;
+`
+const CommentBox = styled.div`
+    border-bottom: 1px solid #e0e0e0;
 `
 
 const PostContainer = ({
@@ -104,16 +108,25 @@ const PostContainer = ({
               )}
           <Count>{likeCount}</Count>
         </IconContainer>
-        <IconContainer>
+        <IconContainer onClick={()=>setIsComments(!isComments)}>
           <Comment/>
-          <Count>0</Count>
+          <Count>{comments.length}</Count>
         </IconContainer>
+
         <IconContainer>
           <Share/>
           <Count>0</Count>
         </IconContainer>
-
       </ActionBar>
+      {isComments && (
+        <Caption>
+          {comments.map((comment, i) => (
+            <div key={`{$name} - ${i}`}>
+              <CommentBox>{comment}</CommentBox>                
+            </div>
+          ))}
+        </Caption>
+      )}
      </Container> 
   )
 }
