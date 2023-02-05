@@ -58,30 +58,32 @@ const PostsSection = ({userId, picturePath, isProfile = false}) => {
     const posts = useSelector((state)=> state.posts);
     const token = useSelector((state)=> state.token);
 
-    const getPosts = async () => {
-        const response = await fetch("http://localhost:5000/posts",{
-            method: "GET",
-            headers: {Authorization: `Bearer ${token}`}
-        });
-        const data = await response.json();
-        dispatch(setPosts({posts: data}));
-    }
-    const getUserPosts = async () => {
-        const response = await fetch(`http://localhost:5000/posts/${userId}/posts`,{
-            method: "GET",
-            headers: {Authorization: `Bearer ${token}`}
-        });
-        const data = await response.json();
-        dispatch(setPosts({posts: data}));
-    }
-
+    
     useEffect(()=>{
+
+        const getPosts = async () => {
+            const response = await fetch("http://localhost:5000/posts",{
+                method: "GET",
+                headers: {Authorization: `Bearer ${token}`}
+            });
+            const data = await response.json();
+            dispatch(setPosts({posts: data}));
+        }
+        const getUserPosts = async () => {
+            const response = await fetch(`http://localhost:5000/posts/${userId}/posts`,{
+                method: "GET",
+                headers: {Authorization: `Bearer ${token}`}
+            });
+            const data = await response.json();
+            dispatch(setPosts({posts: data}));
+        }
+
         if(isProfile){
             getUserPosts();
         }else{
             getPosts();
         }
-    },[]); //eslink-disable-line react-hooks/exhaustive-deps
+    }); //eslink-disable-line react-hooks/exhaustive-deps
     
 
     const [likeSort, setLikeSort] = useState(false);
@@ -100,8 +102,8 @@ const PostsSection = ({userId, picturePath, isProfile = false}) => {
   return (
     <MainContainer>
         <Sorting>
-            <SortButton onClick={()=>setLikeSort(false)}><Icon><Feed/></Icon>Latest Posts</SortButton>
             <SortButton onClick={()=>setLikeSort(true)}> <Icon><Whatshot/></Icon>Most Liked</SortButton>
+            <SortButton onClick={()=>setLikeSort(false)}><Icon><Feed/></Icon>Latest Posts</SortButton>
         </Sorting>
     <Container>
         <PostUpload picturePath={picturePath}/>

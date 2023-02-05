@@ -5,9 +5,7 @@ import UserImage from './UserImage';
 import { useState } from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {setPosts} from '../state';
-import { Attachment, DeleteOutlined, Edit, ImageOutlined, ImageSearch, Mic, VideoCameraBack } from '@mui/icons-material';
-// import { IconButton } from '@mui/material';
-
+import {  DeleteOutlined, Edit, ImageOutlined, ImageSearch,  VideoCameraBack } from '@mui/icons-material';
 
 const Container = styled.div`
   width: 500px;

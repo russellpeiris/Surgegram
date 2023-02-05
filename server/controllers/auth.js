@@ -48,17 +48,18 @@ export const login = async (req, res)=>{
 
         const user = await User.findOne({email});
         if(!user){
-            return res.status(400).json({alert: "User is not registered!"});
+            return res.status(400).json({message: "User is not registered!"});
         };
 
         const isPassTrue = await bcrypt.compare(password, user.password);
         if(!isPassTrue){
-            return res.status(400).json({alert: "Invalid Credentials!"});
+            return res.status(401).json({message: "Invalid Credentials!"});
         };
 
         const token = jwt.sign({id: user._id}, process.env.JWT_SECRET);
         delete user.password; //avoiding password sending to front end
         res.status(200).json({token, user})
+
     }catch(error){
         res.status(500).json({error: error.message});
     }

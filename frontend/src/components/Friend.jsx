@@ -27,10 +27,13 @@ const Box = styled.div`
     font-size: 13px;
     padding: 5px;
 `
-const IconContainer = styled.div `
-    cursor: pointer;
+const IconContainer = styled.button `
+    background-color: transparent;
+    border: none;
+    cursor: not-allowed;
     margin-right: 5px;
 `
+
 const Friend = ({friendId, name, subtitle, userPicturePath}) => {
 
     const dispatch = useDispatch();
@@ -41,6 +44,7 @@ const Friend = ({friendId, name, subtitle, userPicturePath}) => {
 
     // Object.values(friends)
     const isFriend = friends.find((friend)=>friend._id === friendId);
+    
     const patchFriend = async ()=> {
         const response = await fetch(`http://localhost:5000/users/${_id}/${friendId}`,{
             method: "PATCH",
@@ -70,8 +74,10 @@ const Friend = ({friendId, name, subtitle, userPicturePath}) => {
 
             </Box>
         </ImageContainer>
-        <IconContainer onClick={()=> patchFriend()} >
-        {/* <PersonAddOutlined /> */}
+        <IconContainer
+            disabled 
+            onClick={()=> patchFriend()}
+             >
         {
             isFriend ? (
                 <PersonRemoveOutlined />

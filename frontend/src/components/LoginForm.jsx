@@ -1,8 +1,6 @@
-import React from 'react';
 import styled from 'styled-components';
-import { useState } from 'react';
-import {Formik, useFormik} from 'formik';
-// import * as yup from 'yup';
+import React, { useState } from 'react';
+import { useFormik} from 'formik';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setLogin } from '../state';
@@ -65,15 +63,6 @@ const PageType = styled.div`
         text-decoration: underline;
     }
 `
-// const Input = styled.input`
-//     height: 38px;
-//     width: 300px;
-//     outline: none;
-//     border: none;
-//     background-color: #f5f5f5;
-//     padding-left: 10px;
-    
-// `
 
 const CaptchaContainer = styled.div`
 
@@ -139,6 +128,16 @@ const LoginForm = () => {
                 body: JSON.stringify(values)
             }
         );
+
+        if(loggedInResponse.status === 401){
+            alert("Incorrect Password!.");
+            return;
+        }else if(loggedInResponse.status === 400){
+            alert("User does not exist. Please register first!");
+            setPageType('register');
+            return;
+        }
+
         const loggedIn = await loggedInResponse.json();
         onSubmitProps.resetForm();
         if(loggedIn){
@@ -163,7 +162,6 @@ const LoginForm = () => {
         errors,
         touched,
         handleBlur,
-        helperText,
         handleChange,
         handleSubmit,
         setFieldValue,

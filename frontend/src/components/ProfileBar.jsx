@@ -40,6 +40,7 @@ const ImageContainer = styled.div`
 `
 const Name = styled.div`
     font-size: 24px;
+    cursor: pointer;
 `
 const Bio = styled.div`
     padding: 10px;
