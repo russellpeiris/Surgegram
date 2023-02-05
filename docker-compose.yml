@@ -1,0 +1,25 @@
+version: '3.9'
+
+services:
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    image: backend
+    container_name: myBackend
+    command: npm start
+    ports:
+      - "5000:5000"
+    env_file: ./server/.env
+
+  client:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    image: frontend
+    container_name: myFrontEnd
+    command: npm start
+    depends_on:
+      - server
+    ports:
+      - "3000:3000"
